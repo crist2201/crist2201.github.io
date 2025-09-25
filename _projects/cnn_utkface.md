@@ -1,12 +1,44 @@
 ---
 layout: page
 title: Age Estimation and Gender Classification
-description: Train a Convolutional Neural Netowrk (CNN) model to predict the age and the gender of a person using the functional API Keras.
+description: ML, TensorFlow, Python, Google Colab
 img: assets/img/utkface.jpg
 importance: 1
 category: Personal
 related_publications: true
 ---
+
+In this project a Convolutional Neural Netowrk (CNN) model was trained to predict the age and the gender of a person using the functional API Keras.
+
+We used a subsample of 500 images of the UTKFace dataset as our training set. However, it is possible to modify and use different datasets.
+
+To create the CNN we used the functional API Keras version 3 that was integrated with Tensorflow.
+
+Now we are going to create a step by step solution:
+
+1. Import libraries
+
+```python
+from google.colab import drive
+import os
+import matplotlib.pyplot as plt
+from matplotlib.image import imread
+import cv2
+import random
+import tensorflow as tf
+import keras
+import numpy as np
+```
+
+2. Set environment
+3. Set variables
+4. Visualize some photos
+5. Data processing
+6. Building a CNN
+7. Train the CNN model
+8. Evaluate the model
+
+
 
 Every project has a beautiful feature showcase page.
 It's easy to include images in a flexible 3-column grid format.

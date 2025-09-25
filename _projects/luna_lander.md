@@ -3,7 +3,7 @@ layout: page
 title: Luna Lander
 description:  Train Semi-Gradiente Sarsa, Deep Sarsa (DSN), and Deep Sarsa Q-Network (DSQN) reinforcement learning algorithms to control the Luna Lander environment from OpenAI Gym
 img: assets/img/lunarlander.png
-importance: 1
+importance: 2
 category: Personal
 related_publications: true
 ---
