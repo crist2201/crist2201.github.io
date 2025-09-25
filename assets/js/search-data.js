@@ -456,7 +456,7 @@ ninja.data = [{
               window.location.href = "/projects/9_project/";
             },},{id: "projects-age-estimation-and-gender-classification",
           title: 'Age Estimation and Gender Classification',
-          description: "Train a Convolutional Neural Netowrk (CNN) model to predict the age and the gender of a person using the functional API Keras.",
+          description: "ML, TensorFlow, Python, Google Colab",
           section: "Projects",handler: () => {
               window.location.href = "/projects/cnn_utkface/";
             },},{id: "projects-luna-lander",
