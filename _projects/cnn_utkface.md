@@ -1,10 +1,10 @@
 ---
 layout: page
 title: Age Estimation and Gender Classification
-description: with background image
-img: assets/img/12.jpg
+description: Train a Convolutional Neural Netowrk (CNN) model to predict the age and the gender of a person using the functional API Keras.
+img: assets/img/utkface.jpg
 importance: 1
-category: work
+category: Personal
 related_publications: true
 ---
 
