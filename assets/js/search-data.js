@@ -17,8 +17,8 @@ ninja.data = [{
             window.location.href = "/publications/";
           },
         },{id: "nav-projects",
-          title: "projects",
-          description: "A growing collection of your cool projects.",
+          title: "Projects",
+          description: "List of projects that I developed during my free time.",
           section: "Navigation",
           handler: () => {
             window.location.href = "/projects/";
@@ -456,12 +456,12 @@ ninja.data = [{
               window.location.href = "/projects/9_project/";
             },},{id: "projects-age-estimation-and-gender-classification",
           title: 'Age Estimation and Gender Classification',
-          description: "with background image",
+          description: "Train a Convolutional Neural Netowrk (CNN) model to predict the age and the gender of a person using the functional API Keras.",
           section: "Projects",handler: () => {
               window.location.href = "/projects/cnn_utkface/";
             },},{id: "projects-luna-lander",
           title: 'Luna Lander',
-          description: "with background image",
+          description: "Train Semi-Gradiente Sarsa, Deep Sarsa (DSN), and Deep Sarsa Q-Network (DSQN) reinforcement learning algorithms to control the Luna Lander environment from OpenAI Gym",
           section: "Projects",handler: () => {
               window.location.href = "/projects/luna_lander/";
             },},{
