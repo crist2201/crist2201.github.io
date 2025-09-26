@@ -222,18 +222,21 @@ modelA_fit = modelA.fit(
 8. Evaluate the model
 To evaluate the model we plotted 4 learning curves. The loss of the gender classification over the training and validation set, The accuracy of the gender classification over the training and validation set, The loss of the age estimation over the training and validation set, and The MAE of the age estimation over the training and validation set.
 
+We observe noise in age and gender losses because of the low learning rate, because the model performs larger steps to find optimal values.  We observe minor overfitting of gender and age, given the loss curves, mitigated by early stopping callbacks, returning the model weights to the epoch with the lowest validation loss.
+
 <div class="row">
     <div class="col-sm mt-3 mt-md-0">
         {% include figure.liquid loading="eager" path="assets/img/results_cnn.png" class="img-fluid rounded z-depth-1" %}
     </div>
 </div>
 
-We observe noise in age and gender losses because of the low learning rate, because
-the model performs larger steps to find optimal values.  We observe minor overfitting of gender and age, given the loss curves, mitigated by early stopping callbacks, returning the
-model weights to the epoch with the lowest validation loss. Most gender accuracy
-improvement was observed in the first 10 epochs, plateauing afterward. A similar
-observation is seen in age in the first 20 epochs. Finally, we got an accuracy of 88% for gender and MAE of 6.95 years for age.
+Most gender accuracy improvement was observed in the first 10 epochs, plateauing afterward. A similar observation is seen in age in the first 20 epochs. Finally, we got an accuracy of 88% for gender and MAE of 6.95 years for age.
 
+<div class="row">
+    <div class="col-sm mt-3 mt-md-0">
+        {% include figure.liquid loading="eager" path="assets/img/results_2_cnn.png" class="img-fluid rounded z-depth-1" %}
+    </div>
+</div>
 
 To download all the code and the dataset visit the [repository](https://github.com/crist2201/cnn-utkface)
 Every project has a beautiful feature showcase page.
