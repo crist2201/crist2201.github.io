@@ -12,8 +12,8 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
 
 
-    <link href="../static/css/base.css" rel="stylesheet">
-    <link href="../static/css/project_detail.css" rel="stylesheet">
+    <link href="static/css/base.css" rel="stylesheet">
+    <link href="static/css/project_detail.css" rel="stylesheet">
 
 </head>
 <body>
@@ -153,13 +153,13 @@ modelA_fit = modelA.fit(train_dataset, validation_data=val_dataset, epochs=epoch
                         <h3>Results</h3>
                         <p>We observe noise in age and gender losses because of the low learning rate, because the model performs larger steps to find optimal values. We observe minor overfitting of gender and age, given the loss curves, mitigated by early stopping callbacks, returning the model weights to the epoch with the lowest validation loss.</p>
                         <div class="image-container">
-                            <img src="../static/images/results_cnn.png" class="project-image">
+                            <img src="static/images/results_cnn.png" class="project-image">
                         </div>
                         
 
                         <p>Most gender accuracy improvement was observed in the first 10 epochs, plateauing afterward. A similar observation is seen in age in the first 20 epochs. Finally, we got an accuracy of 88% for gender and MAE of 6.95 years for age.</p>
                         <div class="image-container">
-                            <img src="../static/images/results_2_cnn.png" class="project-image">
+                            <img src="static/images/results_2_cnn.png" class="project-image">
                         </div>
                         
                     </div>

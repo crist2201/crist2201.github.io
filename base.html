@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ title }}</title>
+    <title>Base Page</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -11,11 +11,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 
     <link href="{{ url_for('static', path='/css/base.css') }}" rel="stylesheet">
-    {% block stylesheets %}{% endblock %}
+
 </head>
 <body>
 
-    {% if show_header_nav %}
     <header class="main-page-header">
         <nav class="header-nav">
             <ul class="logo-group">
@@ -36,13 +35,10 @@
             </ul>
         </nav>
     </header>
-    {% endif %}
 
     <main class="content-wrapper">
-        {% block content %}{% endblock %}
     </main>
 
-    {% if show_credit_footer %}
     <footer class="site-credit-footer">
         <div class="footer-content">
             <p>&copy; 2025 Cristian Salazar Torrez</p>
@@ -53,9 +49,6 @@
             </div>
         </div>
     </footer>
-    {% endif %}
-
-    {% block scripts %}{% endblock %}
 
 </body>
 </html>
