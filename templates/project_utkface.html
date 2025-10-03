@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Project: Age & Gender Prediction</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+
+
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="../static/css/project_detail.css" rel="stylesheet">
+
+</head>
+<body>
+    <header class="main-page-header">
+        <nav class="header-nav">
+            <ul class="logo-group">
+                <li>
+                    <img src="../static/images/logo.png" alt="Logo">
+                </li>
+                <li class="logo-text">
+                    <h4>Cristian</h4>
+                    <p>ML · AI · Data</p>
+                </li>
+            </ul>
+    
+            <ul class="card-btn">
+                <li><a href="projects.html" class="card-btn back-btn">Back</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <div class="page-container">
+            <div class="project-detail-page">
+                <div class="page-header">
+                    <h1>Age Estimation and Gender Classification</h1>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-description">
+                        <h3>Description</h3>
+                        <p>In this project a Convolutional Neural Network (CNN) model was trained to predict the age and the gender of a person using the functional API Keras. We used a subsample of 500 images of the UTKFace dataset as our training set. However, it is possible to modify and use different datasets. To create the CNN we used the functional API Keras version 3 that was integrated with Tensorflow. Now we are going to create a step by step solution.</p>
+
+                        <h3>Import Libraries</h3>
+                        <p>The first step is to import all the necessary libraries for data manipulation, visualization, and building the model with TensorFlow/Keras.</p>
+                        <pre><code class="language-python">from google.colab import drive
+import os
+import matplotlib.pyplot as plt
+import cv2
+import random
+import tensorflow as tf
+import keras
+import numpy as np</code></pre>
+
+                        <h3>Environment Setup</h3>
+                        <p>A simple variable to switch between Google Colab and local environments.</p>
+                        <pre><code class="language-python">env = 'google_colab' # change to 'local' if not using Colab</code></pre>
+
+                        <h3>Data Processing</h3>
+                        <h4>Split Data</h4>
+                        <p>The dataset is split into training (80%) and validation (20%) sets after being randomly shuffled.</p>
+                        <pre><code class="language-python">all_image_files = [f for f in os.listdir(folder) if f.lower().endswith('.jpg')]
+random.seed(0)
+random.shuffle(all_image_files)
+train_end = int(len(all_image_files) * 0.8)
+train_image_files = all_image_files[:train_end]
+val_image_files = all_image_files[train_end:]</code></pre>
+
+                        <h4>Load and Normalize Data</h4>
+                        <p>A function loads image data, extracts age and gender labels from filenames, and normalizes pixel values to the range [0, 1].</p>
+                        <pre><code class="language-python">def load_imgs_lables(dataset_path, filenames):
+    print('load all image data, age and gender labels...')
+    images = []
+    age_labels = []
+    gender_labels = []
+    for current_file_name in filenames:
+        img = cv2.imread(os.path.join(dataset_path, current_file_name))
+        img = img / 255.0  # Normalize pixel values
+        labels = current_file_name.split('_')
+        age_label = int(labels[0])
+        gender_label = int(labels[1])
+        age_labels.append(age_label)
+        gender_labels.append(gender_label)
+        images.append(img)
+
+train_images, train_age, train_gender = load_imgs_lables(folder, train_image_files)
+val_images, val_age, val_gender = load_imgs_lables(folder, val_image_files)</code></pre>
+
+                        <h4>Batching and Augmentation</h4>
+                        <p>The datasets are batched to optimize training performance. A data augmentation layer is created to randomly flip images horizontally, creating more training samples.</p>
+                        <pre><code class="language-python"># Batching
+train_dataset = tf.data.Dataset.from_tensor_slices(...)
+train_dataset = train_dataset.batch(batch_size)
+
+# Augmentation Layer
+data_augmentation_layers = [tf.keras.layers.RandomFlip("horizontal")]</code></pre>
+
+                        <h3>Building the CNN Model</h3>
+                        <h4>Shared Convolutional Block</h4>
+                        <p>The model starts with a shared block that learns low-level features for both age and gender. It includes convolutional layers, batch normalization, and max-pooling.</p>
+                        <pre><code class="language-python">input_shape = (128, 128, 3)
+inputs = Input(shape=input_shape)
+aug = data_augmentation(inputs)
+conv_1 = Conv2D(32, (3, 3), padding='same', activation='relu')(aug)
+conv_1 = BatchNormalization()(conv_1)
+conv_1 = Conv2D(64, (3, 3), padding='same', activation='relu')(conv_1)
+conv_1 = BatchNormalization()(conv_1)
+conv_1 = MaxPooling2D(pool_size=(2, 2))(conv_1)</code></pre>
+
+                        <h4>Gender Branch</h4>
+                        <p>This branch uses three convolutional blocks with L2 regularization to predict gender, outputting a value via a sigmoid activation function.</p>
+                        <pre><code class="language-python"># Gender Branch
+conv_2_g = Conv2D(64, (3, 3), padding='same', activation='relu', kernel_regularizer=l2(0.001))(conv_1)
+conv_2_g = BatchNormalization()(conv_2_g)
+conv_2_g = MaxPooling2D(pool_size=(2, 2))(conv_2_g)
+# ... additional layers ...
+flatten_gender = Flatten() (conv_2_g)
+gender_fc = Dense(128, activation='relu')(flatten_gender)
+gender_fc = Dropout(0.30)(gender_fc)
+output_1 = Dense(1, activation='sigmoid', name='gender_out')(gender_fc)</code></pre>
+
+                        <h4>Age Branch</h4>
+                        <p>This branch is deeper, using five convolutional blocks to handle the more complex task of age regression. It uses a ReLU activation for its final output.</p>
+                        <pre><code class="language-python"># Age Branch
+conv_2 = Conv2D(64, (3, 3), padding='same', activation='relu')(conv_1)
+conv_2 = BatchNormalization()(conv_2)
+conv_2 = MaxPooling2D(pool_size=(2, 2))(conv_2)
+# ... additional layers ...
+flatten_age = Flatten()(conv_4)
+age_fc = Dense(128, activation='relu')(flatten_age)
+age_fc = Dropout(0.30)(age_fc)
+output_2 = Dense(1, activation='relu', name='age_out')(age_fc)</code></pre>
+
+                        <h3>Training and Evaluation</h3>
+                        <p>The model is compiled with the Adam optimizer and trained using binary cross-entropy for gender and MAE for age. An early stopping callback is used to prevent overfitting.</p>
+                        <pre><code class="language-python"># Compile the model
+opt = keras.optimizers.Adam(learning_rate = 0.001)
+callback = keras.callbacks.EarlyStopping(monitor='val_loss', patience=20, restore_best_weights=True)
+
+modelA.compile(loss={'gender_out': 'binary_crossentropy', 'age_out': 'mae'},
+               optimizer=opt,
+               metrics={'gender_out': 'accuracy', 'age_out': 'mae'})
+
+# Train the model
+epochs = 50
+modelA_fit = modelA.fit(train_dataset, validation_data=val_dataset, epochs=epochs, callbacks=[callback])</code></pre>
+                        
+                        <h3>Results</h3>
+                        <p>We observe noise in age and gender losses because of the low learning rate, because the model performs larger steps to find optimal values. We observe minor overfitting of gender and age, given the loss curves, mitigated by early stopping callbacks, returning the model weights to the epoch with the lowest validation loss.</p>
+                        <div class="image-container">
+                            <img src="../static/images/results_cnn.png" class="project-image">
+                        </div>
+                        
+
+                        <p>Most gender accuracy improvement was observed in the first 10 epochs, plateauing afterward. A similar observation is seen in age in the first 20 epochs. Finally, we got an accuracy of 88% for gender and MAE of 6.95 years for age.</p>
+                        <div class="image-container">
+                            <img src="../static/images/results_2_cnn.png" class="project-image">
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="project-meta">
+                        <h3>Technologies Used</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">ML</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Keras</span>
+                            <span class="tech-tag">NumPy</span>
+                            <span class="tech-tag">OpenCV</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/crist2201/cnn-utkface" target="_blank" class="card-btn github-btn">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <footer class="site-credit-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Cristian Salazar Torrez</p>
+            <div class="footer-socials">
+                <a href="https://github.com/crist2201" target="_blank" class="social-icon github" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/cristian-salazar-torrez/" target="_blank" class="social-icon linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:cristiansalazar822@gmail.com" class="social-icon google" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>

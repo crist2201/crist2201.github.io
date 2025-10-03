@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Cristian | ML · AI · Data</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="../static/css/index.css" rel="stylesheet">
+</head>
+<body>
+
+    <header class="main-page-header">
+        <nav class="header-nav">
+            <ul class="logo-group">
+                <li>
+                    <img src="../static/images/logo.png" alt="Logo">
+                </li>
+                <li class="logo-text">
+                    <h4>Cristian</h4>
+                    <p>ML · AI · Data</p>
+                </li>
+            </ul>
+    
+            <ul class="header-links">
+                <li><a href="index.html" class="active">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="projects.html">Projects</a></li>
+                <li><a href="skills.html">Skills</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main class="content-wrapper">
+        <div class="container">
+            <div class="hero-section">
+                <div class="hero-left">
+                    <h1>Hi all 👋 I'm Cristian</h1>
+                    <p class="subtitle">
+                        MSc Data Scientist specializing in Large Language Models and developing Machine Learning solutions.
+                    </p>
+                    <div class="cta-buttons">
+                        <a href="../static/CRISTIAN_SALAZAR_TORREZ.pdf" target="_blank" class="resume-button">My Resume</a>
+                        <a href="about.html" class="about-me-button">About me</a>
+                    </div>
+                </div>
+
+                <div class="hero-right">
+                    <div id="icon-cloud-container">
+                        <canvas width="600" height="600" id="iconCanvas">
+                            <p>Browser not supported.</p>
+                        </canvas>
+                    </div>
+                    <div id="tags" style="display: none;"> <ul>
+                            <li><a href="#"><img src="../static/images/tech_icons/python.png" width="40" height="40" alt="Python"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/docker.png" width="40" height="40" alt="Docker"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/googlecloud.png" width="40" height="40" alt="Google Cloud"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/fastapi.png" width="40" height="40" alt="FastAPI"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/postman.png" width="40" height="40" alt="Postman"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/git.png" width="40" height="40" alt="Git"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/notion.png" width="40" height="40" alt="Notion"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/mysql.png" width="40" height="40" alt="MySQL"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/tensorflow.png" width="40" height="40" alt="TensorFlow"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/keras.png" width="40" height="40" alt="Keras"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/pytorch.png" width="40" height="40" alt="PyTorch"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/scikitlearn.png" width="40" height="40" alt="Scikit-learn"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/scipy.png" width="40" height="40" alt="SciPy"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/huggingface.png" width="40" height="40" alt="Hugging Face"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/numpy.png" width="40" height="40" alt="NumPy"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/apachespark.png" width="40" height="40" alt="Apache Spark"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/pandas.png" width="40" height="40" alt="Pandas"></a></li>
+                            <li><a href="#"><img src="../static/images/tech_icons/streamlit.png" width="40" height="40" alt="Streamlit"></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="contact-me">
+                <p class="subtitle">Feel free to connect with me</p>
+                <div class="social-links">
+                    <a href="https://github.com/crist2201" target="_blank" class="social-icon github" title="GitHub"><i class="fab fa-github"></i></a>
+                    <a href="https://linkedin.com/in/cristian-salazar-torrez/" target="_blank" class="social-icon linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="mailto:cristiansalazar822@gmail.com" class="social-icon google" title="Email"><i class="fas fa-envelope"></i></a>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="https://www.goat1000.com/tagcanvas.min.js" type="text/javascript"></script>
+    <script type="text/javascript">
+      window.onload = function() {
+        try {
+          TagCanvas.Start('iconCanvas', 'tags', {
+            outlineColour: 'transparent',
+            reverse: true,
+            depth: 0.8,
+            maxSpeed: 0.05,
+            imageScale: 1.0,
+            initial: [0.1, -0.1],
+            weight: true,
+            imageMode: 'image',
+            activeCursor: 'default'
+          });
+        } catch(e) {
+          // Hide the canvas container if something goes wrong
+          document.getElementById('icon-cloud-container').style.display = 'none';
+        }
+      };
+    </script>
+</body>
+</html>

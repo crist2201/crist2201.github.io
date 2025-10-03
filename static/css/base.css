@@ -1,0 +1,195 @@
+/* ==========================================================================
+   1. Base Styles & CSS Variables
+   ========================================================================== */
+:root {
+    --text-primary: #2d3748;
+    --text-secondary: #536072fb;
+    --bg-primary: #ffffff;
+    --bg-secondary: #f9fafb;
+    --color-accent: #2216ac;
+    --color-header: #ce550f; 
+    --color-border: #e2e8f0;
+    --shadow-sm: rgba(0, 0, 0, 0.05);
+    --shadow-md: rgba(0, 0, 0, 0.1);
+}
+
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: var(--bg-primary);
+    color: var(--text-primary);
+    line-height: 1.6;
+    min-height: 100vh;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ==========================================================================
+   3. Header Navigation (Professional Style)
+   ========================================================================== */
+.main-page-header {
+    padding: 15px 40px;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.header-nav {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Left Side: Logo */
+.logo-group {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    list-style: none;
+}
+
+.logo-group img {
+    height: 40px;
+    width: 40px;
+    display: block;
+}
+
+.logo-text h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+    text-align: center;
+}
+
+.logo-text p {
+    font-size: 0.8em;
+    color: var(--text-secondary);
+}
+
+/* Right Side: Text Links */
+.header-links {
+    list-style: none;
+    display: flex;
+    gap: 20px;
+}
+
+.header-links a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-decoration: none;
+    color: var(--text-secondary);
+    font-size: 1em;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.header-links a:hover {
+    color: var(--color-header);
+}
+
+/* Active state for the text links */
+.header-links a.active {
+    color: #ffffff;
+    font-weight: 700;
+    color: var(--color-header);
+}
+
+
+/* ==========================================================================
+   2. Main Layout Containers
+   ========================================================================== */
+.page-container {
+    max-width: 1200px;
+    margin: 20px auto;
+}
+
+.page-header{
+    text-align: center;
+    margin-top: 20px;
+}
+
+.page-container h2 {
+    padding-top: 20px;
+    border-bottom: 1px dotted var(--text-secondary);
+    margin-bottom: 20px;
+
+}
+
+
+/* ==========================================================================
+   4. Site Credit Footer
+   ========================================================================== */
+.site-credit-footer {
+    padding: 25px 40px;
+    margin-top: 50px;
+    background-color: var(--bg-secondary);
+    border-top: 1px solid var(--color-border);
+}
+
+.footer-content {
+    max-width: 1200px;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.social-icon:hover {
+    transform: translateY(-3px) scale(1.05);
+}
+
+.social-icon.github { background-color: #333; }
+.social-icon.linkedin { background-color: #0077b5; }
+.social-icon.google { background-color: #db4437; }
+
+.footer-content p {
+    color: var(--text-secondary);
+    font-size: 0.9em;
+}
+
+.footer-socials {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-socials a {
+    color: var(--bg-primary);
+    font-size: 1.6em;
+    text-decoration: none;
+    transition: color 0.2s ease, transform 0.2s ease;
+}
+
+.footer-socials a:hover {
+    color: var(--bg-primary);
+    transform: translateY(-2px);
+}
+
+/* ==========================================================================
+   5. Responsive Design
+   ========================================================================== */
+@media (min-width: 768px) {
+    .footer-content {
+        flex-direction: row;
+        justify-content: space-between;
+    }
+}

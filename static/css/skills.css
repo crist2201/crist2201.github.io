@@ -1,0 +1,64 @@
+/* --- Main Grid Container --- */
+.skills-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 20px;
+}
+
+.skill-category {
+    border-radius: 24px;
+    overflow: hidden;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 20px 20px rgba(0, 0, 0, 0.15);
+    color: var(--text-primary);
+}
+
+.skill-category:hover {
+    transform: translateY(-10px);
+}
+
+
+/* --- Category Title */
+.skill-category h2 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-bottom: 15px;
+    padding: 12px;
+    display: flex;
+    align-items: center;
+    background-color: #1c622c;
+    color: #ffff;
+}
+
+.skill-category h2 i {
+    margin-right: 10px;
+    font-size: 1.1em;
+}
+
+.skill-tags {
+    display: block;
+    padding: 0px 30px;
+    margin-bottom: 10px;
+}
+
+.skill-tag {
+    background-color: transparent; /* No more tag background */
+    color: var(--text-primary); /* Light text color for skills */
+    padding: 6px 0; /* Vertical spacing for each skill */
+    font-size: 1em;
+    font-weight: 400;
+    box-shadow: none;
+}
+
+/* --- Skill Logo --- */
+.skill-logo {
+    width: 18px;
+    height: 18px;
+    margin-right: 12px;
+    object-fit: contain;
+    opacity: 1; /* Make logos blend in a bit */
+}

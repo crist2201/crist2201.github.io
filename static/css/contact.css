@@ -1,0 +1,52 @@
+.connect-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 40px;
+    text-align: left;
+}
+
+.connect-grid h2 {
+    font-size: 1.5em;
+    margin-top: 35px;
+    margin-bottom: 10px;   
+}
+
+.connect-grid li {
+    margin-bottom: 20px;
+    font-size: 1.1em;
+}
+
+/* Get in Touch Section */
+.get-in-touch li {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.get-in-touch a {
+    color: var(--text-primary);
+    text-decoration: none;
+    border-bottom: 1px solid transparent;
+    transition: border-color 0.3s;
+}
+.get-in-touch a:hover {
+    color: var(--color-accent);
+}
+
+
+.social-icon {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    color: #fff;
+    font-size: 1.2rem;
+    text-decoration: none;
+    transition: transform 0.2s ease;
+}
+
+.social-icon.github { background-color: #333; }
+.social-icon.linkedin { background-color: #0077b5; }
+.social-icon.google { background-color: #db4437; }

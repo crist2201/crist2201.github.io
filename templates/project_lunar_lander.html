@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>Project: Lunar Lander</title>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" rel="stylesheet" />
+
+
+    <link href="../static/css/base.css" rel="stylesheet">
+    <link href="../static/css/project_detail.css" rel="stylesheet">
+
+</head>
+<body>
+    <header class="main-page-header">
+        <nav class="header-nav">
+            <ul class="logo-group">
+                <li>
+                    <img src="../static/images/logo.png" alt="Logo">
+                </li>
+                <li class="logo-text">
+                    <h4>Cristian</h4>
+                    <p>ML · AI · Data</p>
+                </li>
+            </ul>
+    
+            <ul class="card-btn">
+                <li><a href="projects.html" class="card-btn back-btn">Back</a></li>
+            </ul>
+        </nav>
+    </header>
+
+        <div class="page-container">
+            <div class="project-detail-page">
+                <div class="page-header">
+                    <h1>Lunar Lander</h1>
+                </div>
+
+                <div class="project-content">
+                    <div class="project-description">
+                        <h3>Description</h3>
+                        <p>The objective of this project is to leverage Semi-Gradiente Sarsa, Deep Sarsa (DSN), and Deep Sarsa Q-Network (DSQN), reinforcement learning algorithms, to train and compare different agents capable of controling the Luna Lander environment from OpenAI Gym.</p>
+
+                        <h3>Import Libraries</h3>
+                        <p>The first step is to import all the necessary libraries to obtain the environment, and to create the CNN for DSQN.</p>
+                        <pre><code class="language-python">import gymnasium as gym
+import numpy as np
+import torch
+import torch.nn as nn
+import torch.optim as optim
+import torch.nn.functional as F
+import random
+import cv2
+import matplotlib.pyplot as plt
+import ale_py</code></pre>
+
+                        <h3>Define variables</h3>
+                        <p>It is important to define the variables that our algorithms need to be implemented. In this case we are going to create a class to make it modular and simpler to implement</p>
+                        <pre><code class="language-python">class SarsaGradientAgent():
+    def __init__(self, env, input_dim=8, buffer_capacity=100000, learning_rate=1e-4):
+    self.env = gym.make(env)
+    self.device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
+
+    self.path = f'{env}/'
+            
+    self.batch_size = 128
+    self.gamma = 0.99
+    self.epsilon = 1.0
+    self.epsilon_end = 0.001
+    self.epsilon_decay = 0.992
+    self.learning_rate = learning_rate
+
+    self.weights = np.zeros((self.env.action_space.n, input_dim))
+            
+    self.q_network = DeepQNetwork(input_dim, self.env.action_space.n).to(self.device)
+    self.optimizer = optim.Adam(self.q_network.parameters(), lr=self.learning_rate)
+    self.buffer = ReplayBuffer(buffer_capacity)
+
+    self.episode = 0
+    self.reward_episode = 0
+    self.total_reward = []
+    self.total_reward_moving_avg = []
+    self.x_position = []
+    self.y_position = []
+    </code></pre>
+
+                        <h3>Semi-gradiente Sarsa</h3>
+                        <p>The first algorithm that we are going to implement is called Sarsa Gradient. In this case we are going to implement a epsilon greedy policy</p>
+                        <pre><code class="language-python">def train_simple_sarsa(self, num_episodes=1000):
+    for episode in range(num_episodes):
+        self.reward_episode = 0
+        state, _ = self.env.reset()
+        action = self.simple_epsilon_greedy(state, self.epsilon)
+        done = False
+                
+        while not done:
+                    
+            next_state, reward, terminated, truncated, _ = self.env.step(action)
+            done = terminated or truncated
+
+            next_action = self.simple_epsilon_greedy(next_state, self.epsilon)
+            q_sa = np.dot(self.weights[action], state)
+            q_s_next_a = np.dot(self.weights[next_action], next_state)
+            td_error = reward + self.gamma * q_s_next_a - q_sa
+
+            self.weights[action] += self.learning_rate * td_error * state
+                    
+            state = next_state
+            action = next_action
+            self.reward_episode += reward
+                
+        self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)
+        self.total_reward.append(self.reward_episode)
+        print(f"Episode {episode} — Total Reward: {self.reward_episode:.2f} — Epsilon: {self.epsilon:.3f}")</code></pre>
+
+                        <h3>Deep Sarsa Neural Network (DSN)</h3>
+                        <p>A function loads image data, extracts age and gender labels from filenames, and normalizes pixel values to the range [0, 1].</p>
+                        <pre><code class="language-python">def train_no_experience(self, num_episodes=1000):
+    for episode in range(1, num_episodes + 1):
+        self.reward_episode = 0
+        done = False
+        state, _ = self.env.reset()
+        action = self.epsilon_greedy(self.q_network, state, self.epsilon, self.device)
+
+        while not done:
+            next_state, reward, terminated, truncated, _ = self.env.step(action)
+            done = terminated or truncated
+            self.reward_episode += reward
+
+            next_action = self.epsilon_greedy(self.q_network, next_state, self.epsilon, self.device)
+
+            state_tensor      = torch.tensor(state, dtype=torch.float32).unsqueeze(0).to(self.device)
+            action_tensor     = torch.tensor([action], dtype=torch.int64).to(self.device)
+            reward_tensor     = torch.tensor([reward], dtype=torch.float32).to(self.device)
+            next_state_tensor = torch.tensor(next_state, dtype=torch.float32).unsqueeze(0).to(self.device)
+            next_action_tensor= torch.tensor([next_action], dtype=torch.int64).to(self.device)
+            done_tensor       = torch.tensor([done], dtype=torch.float32).to(self.device)
+
+            q_values = self.q_network(state_tensor)
+            q_sa = q_values.gather(1, action_tensor.unsqueeze(1)).squeeze(1)
+
+            with torch.no_grad():
+                q_next = self.q_network(next_state_tensor)
+                q_snext_anext = q_next.gather(1, next_action_tensor.unsqueeze(1)).squeeze(1)
+
+            td_target = reward_tensor + self.gamma * q_snext_anext * (1 - done_tensor)
+
+            loss = F.mse_loss(q_sa, td_target)
+
+            self.optimizer.zero_grad()
+            loss.backward()
+            self.optimizer.step()
+
+            state, action = next_state, next_action
+
+        self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)
+
+        self.total_reward.append(self.reward_episode)
+        print(f"Episode {episode} — Total Reward: {self.reward_episode:.2f} — Epsilon: {self.epsilon:.3f}")</code></pre>
+
+                        <h3>Deep Sarsa Q-Network (DSQN)</h3>
+                        <p>The datasets are batched to optimize training performance. A data augmentation layer is created to randomly flip images horizontally, creating more training samples.</p>
+                        <pre><code class="language-python">def train(self, num_episodes=1000):
+    for episode in range(1, num_episodes+1):
+        self.reward_episode = 0
+        done = False
+        state, _ = self.env.reset()
+        action = self.epsilon_greedy(self.q_network, state, self.epsilon, self.device)
+        if episode % 50 == 0 or episode == 1:
+            self.save_checkpoints_bath(batch=str(episode))
+            self.save_positions(batch=str(episode))
+            self.reset_position()
+            
+        while done == False:
+
+            next_state, reward, terminated, truncated, _ = self.env.step(action)
+            done = terminated or truncated
+            self.reward_episode += reward
+
+            next_action = self.epsilon_greedy(self.q_network, next_state, self.epsilon, self.device)
+
+            self.buffer.push(state, action, reward, next_state, next_action, done)
+
+            state, action = next_state, next_action
+
+            self.x_position.append(state[0])
+            self.y_position.append(state[1])
+
+            if len(self.buffer) >= self.batch_size:
+                states, actions, rewards, next_states, next_actions, dones = self.buffer.sample(self.batch_size)
+
+                states      = states.to(self.device)
+                actions     = actions.to(self.device)
+                rewards     = rewards.to(self.device)
+                next_states = next_states.to(self.device)
+                next_actions= next_actions.to(self.device)
+                dones       = dones.to(self.device)
+
+                q_values = self.q_network(states)
+                q_sa     = q_values.gather(1, actions.unsqueeze(1)).squeeze(1)
+
+                q_next = self.q_network(next_states)
+                q_snext_anext = q_next.gather(1, next_actions.unsqueeze(1)).squeeze(1)
+
+                td_target = rewards + self.gamma * q_snext_anext * (1 - dones)
+
+                loss = F.mse_loss(q_sa, td_target.detach())
+                    
+                self.optimizer.zero_grad()
+                loss.backward()
+                self.optimizer.step()
+                
+        self.epsilon = max(self.epsilon_end, self.epsilon * self.epsilon_decay)         
+        self.total_reward.append(self.reward_episode)
+        print(f"Episode {episode} — Total Reward: {self.reward_episode:.2f} — Epsilon: {self.epsilon:.3f}")</code></pre>
+
+                        <h4>Gender Branch</h4>
+                        <p>This branch uses three convolutional blocks with L2 regularization to predict gender, outputting a value via a sigmoid activation function.</p>
+                        <pre><code class="language-python"># Gender Branch
+conv_2_g = Conv2D(64, (3, 3), padding='same', activation='relu', kernel_regularizer=l2(0.001))(conv_1)
+conv_2_g = BatchNormalization()(conv_2_g)
+conv_2_g = MaxPooling2D(pool_size=(2, 2))(conv_2_g)
+# ... additional layers ...
+flatten_gender = Flatten() (conv_2_g)
+gender_fc = Dense(128, activation='relu')(flatten_gender)
+gender_fc = Dropout(0.30)(gender_fc)
+output_1 = Dense(1, activation='sigmoid', name='gender_out')(gender_fc)</code></pre>
+ 
+                        <h3>Results</h3>
+                        <p>We observe noise in age and gender losses because of the low learning rate, because the model performs larger steps to find optimal values. We observe minor overfitting of gender and age, given the loss curves, mitigated by early stopping callbacks, returning the model weights to the epoch with the lowest validation loss.</p>
+                        <div class="image-container">
+                            <img src="../static/images/results_cnn.png" class="project-image">
+                        </div>
+                        
+
+                        <p>Most gender accuracy improvement was observed in the first 10 epochs, plateauing afterward. A similar observation is seen in age in the first 20 epochs. Finally, we got an accuracy of 88% for gender and MAE of 6.95 years for age.</p>
+                        <div class="image-container">
+                            <img src="../static/images/results_2_cnn.png" class="project-image">
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="project-meta">
+                        <h3>Technologies Used</h3>
+                        <div class="tech-tags">
+                            <span class="tech-tag">ML</span>
+                            <span class="tech-tag">Python</span>
+                            <span class="tech-tag">TensorFlow</span>
+                            <span class="tech-tag">Keras</span>
+                            <span class="tech-tag">NumPy</span>
+                            <span class="tech-tag">OpenCV</span>
+                        </div>
+                        <div class="project-links">
+                            <a href="https://github.com/crist2201/cnn-utkface" target="_blank" class="card-btn github-btn">
+                                <i class="fab fa-github"></i> Source Code
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    <footer class="site-credit-footer">
+        <div class="footer-content">
+            <p>&copy; 2025 Cristian Salazar Torrez</p>
+            <div class="footer-socials">
+                <a href="https://github.com/crist2201" target="_blank" class="social-icon github" title="GitHub"><i class="fab fa-github"></i></a>
+                <a href="https://linkedin.com/in/cristian-salazar-torrez/" target="_blank" class="social-icon linkedin" title="LinkedIn"><i class="fab fa-linkedin-in"></i></a>
+                <a href="mailto:cristiansalazar822@gmail.com" class="social-icon google" title="Email"><i class="fas fa-envelope"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js"></script>
+
+</body>
+</html>

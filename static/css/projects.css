@@ -1,0 +1,118 @@
+.projects-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+    gap: 30px;
+    padding-top: 10px;
+}
+
+.project-card {
+    border-radius: 24px;
+    overflow: hidden;
+    padding: 25px;
+    min-height: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    color: var(--text-primary);
+}
+
+.project-card:hover {
+    transform: translateY(-10px);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+    margin-bottom: 20px;
+}
+.tech-tag {
+    background-color: #11832a;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    color: #fff;
+}
+
+.card-header p {
+    margin-top: 10px;
+    font-size: 1.0em;
+    font-weight: 500;
+    opacity: 0.8;
+}
+
+.card-header h3 {
+    margin: 5px 0 0;
+    font-size: 1.5em;
+    font-weight: 700;
+}
+
+.card-image {
+    overflow: hidden; /* Hides any part of the image that overflows the container */
+    border-radius: 12px; /* Optional: adds rounded corners to the image area */
+}
+.project-image {
+    width: 100%; /* Makes the image fill the container's width */
+    height: 100%; /* Makes the image fill the container's height */
+    object-fit: cover; /* This is the key property! */
+    object-position: center; /* Centers the image within the frame */
+}
+
+.card-description p {
+    margin-top: 20px;
+    font-size: 1.0em;
+    font-weight: 500;
+    opacity: 0.8;
+    text-align: justify;
+}
+
+.card-footer {
+    margin-top: 20px;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+    border-top: 1px solid rgba(255, 255, 255, 0.1); /* Subtle separator line */
+}
+
+.card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.card-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card-btn i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+/* Specific style for the streamlit button to make it stand out */
+.github-btn {
+    background: #c09df5; 
+}
+
+.github-btn:hover {
+    background:  #501DAF;
+}
+
+.streamlit-btn {
+    background: rgb(255 75 75 / 40%); /* Streamlit red, but subtle */
+}
+
+.streamlit-btn:hover {
+    background: rgb(255 75 75);
+}

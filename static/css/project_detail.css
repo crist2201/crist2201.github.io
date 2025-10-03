@@ -1,0 +1,99 @@
+.project-detail-page {
+    margin: 40px auto;
+}
+
+.project-description h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+}
+
+.project-description p {
+    font-size: 1.1em; 
+    line-height: 1.8;
+}
+
+/* --- Styles for Technical Breakdown --- */
+.project-description h3 {
+    font-size: 1.5em;
+    font-weight: 600;
+    margin-top: 40px;
+    margin-bottom: 15px;
+    border-bottom: 1px dotted var(--text-secondary);
+}
+
+.project-description h4 {
+    font-size: 1.2em;
+    font-weight: 600;
+    margin-top: 25px;
+    margin-bottom: 10px;
+}
+
+.project-description p {
+    font-size: 1.1em;
+    line-height: 1.8;
+}
+
+.project-meta h3 {
+    font-size: 1.0em;
+    margin-bottom: 20px;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-bottom: 30px;
+}
+.tech-tag {
+    background-color: #11832a;
+    color: #fff;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+}
+
+.card-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 15px;
+    border-radius: 15px;
+    background: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    text-decoration: none;
+    font-weight: 500;
+    font-size: 0.9em;
+    transition: background-color 0.2s ease;
+}
+
+.card-btn:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+.card-btn i {
+    margin-right: 8px;
+    font-size: 1.1em;
+}
+
+.back-btn {
+    background: #c09df5;
+}
+
+.back-btn:hover {
+    background:  #501DAF;
+}
+
+
+.github-btn {
+    background: #c09df5; 
+}
+
+.github-btn:hover {
+    background:  #501DAF;
+}
+
+
+.image-container {
+    display: flex;
+    justify-content: center;
+}

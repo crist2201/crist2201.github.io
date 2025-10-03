@@ -1,0 +1,188 @@
+.description {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr; /* Give slightly more space to the text */
+    align-items: center;
+    gap: 60px;
+}
+
+.description-left {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.description-right {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Stats */
+.stats-section {
+    display: flex;
+    justify-content: center;
+    gap: 20px; 
+    padding: 40px 0;
+}
+
+.stat-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    background-color:#ce550f17;
+    padding: 20px;
+    border-radius: 20px;
+}
+
+.stat-number {
+    font-size: 2.5rem;
+    font-weight: bolder;
+    line-height: 1;
+    margin-bottom: 10px;
+    color: var(--color-header);
+}
+
+.stat-label {
+    font-size: 0.8rem;
+    color: var(--text-primary);
+    text-transform: uppercase;
+    font-weight: bolder;
+}
+
+/* Summary*/
+.description-left p {
+    margin-top: 10px;
+    text-align: justify;
+}
+/* Image */
+.description-right img {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    object-fit: cover;
+}
+
+/* Information */
+.experience-grid {
+    display: flex;
+    flex-direction: column;
+    align-items: center; 
+    gap: 15px; /* Space between cards */
+}
+
+
+.experience-card {
+    border: 1px solid var(--color-header);
+    border-radius: 12px;
+    width: 700px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.3s ease;
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 25px;
+    cursor: pointer;
+    gap: 20px;
+    transition: background-color 0.2s ease;
+    flex-direction: row;
+}
+
+.header-info {
+    display: flex;
+    flex-direction: column;
+}
+
+.dropdown-icon {
+    font-size: 1.2em;
+    color: var(--color-header);
+    transition: transform 0.3s ease-in-out; /* Animate the icon rotation */
+}
+
+.experience-card[open] > .card-header .dropdown-icon {
+    transform: rotate(180deg);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+}
+
+/* Styling the individual parts of the header */
+.header-content .role {
+    font-size: 1.2em;
+    font-weight: 600;
+    color: var(--text-primary);
+}
+
+.extra-info {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    font-size: 1.1em;
+    font-weight: 500;
+    color: var(--text-secondary)
+}
+
+.card-header::-webkit-details-marker {
+    display: none; /* Also removes the default triangle in Chrome/Safari */
+}
+
+.extra-info > span:not(:last-child)::after {
+    content: "•";
+    color: #020c18ec;
+    font-weight: bold;
+    margin-left: 12px;
+}
+
+/* Description */
+.card-description {
+    padding: 20px 20px 20px 20px; /* Padding for the content area */
+    border-top: 1px solid #e0e0e0;
+}
+
+.card-description h4 {
+    margin-bottom: 10px;
+    color: #2d3748;
+}
+
+.card-description li {
+    padding-bottom: 10px;
+}
+
+.task-tags {
+    display: flex;
+    flex-direction: column;
+}
+
+.task-tags ul {
+    list-style-position: outside;
+    padding-left: 20px;
+    color: var(--text-primary);
+    text-align: justify;
+} 
+
+.task-tag {
+    background-color: transparent; /* No more tag background */
+    color: var(--text-primary); /* Light text color for skills */
+    padding: 6px 0; /* Vertical spacing for each skill */
+    font-size: 1em;
+    font-weight: 400;
+    box-shadow: none;
+}
+
+.tech-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.tech-tag {
+    background-color: #11832a;
+    padding: 5px 12px;
+    border-radius: 15px;
+    font-size: 0.9em;
+    color: #fff;
+}
+
